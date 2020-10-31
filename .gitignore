@@ -1,8 +1,2 @@
 *~
-*.o
-*.a
-Makefile
-config.log
-config.status
-config.h
-autom4te.cache/
+build/

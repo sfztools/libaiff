@@ -129,12 +129,6 @@ int AIFF_EndWritingMarkers(AIFF_Ref) ;
 
 #ifndef LIBAIFF
 
-#undef PACKAGE_BUGREPORT
-#undef PACKAGE_NAME
-#undef PACKAGE_STRING
-#undef PACKAGE_TARNAME
-#undef PACKAGE_VERSION
-
 #ifdef WORDS_BIGENDIAN
 #undef WORDS_BIGENDIAN
 #endif

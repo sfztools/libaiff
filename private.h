@@ -1,5 +1,7 @@
 /* $Id: private.h,v 1.29 2009/09/11 16:51:07 toad32767 Exp $ */
 
+#include <string.h>
+
 /* XXX */
 #define OFF_T off_t
 #define FSEEKO fseeko
@@ -50,19 +52,6 @@ struct s_AIFF_Rec {
 	AIFF_Buf buf[kAIFFNBufs];
 } ;
 #define kAIFFRecSize	sizeof(struct s_AIFF_Rec)
-
-#if !defined(HAVE_MEMSET) && defined(HAVE_BZERO)
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
-#define memset(a, b, c) bzero((a), (c))
-
-#endif
 
 #ifdef MIN
 #undef MIN

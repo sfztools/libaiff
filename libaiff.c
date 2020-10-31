@@ -1113,10 +1113,6 @@ AIFFAssertionFailed (const char * fil, int lin)
 			PACKAGE_BUGREPORT
 			);
 	
-#ifdef HAVE_ABORT
 	abort();
-#else
-	/* XXX */
-#endif
 }
 

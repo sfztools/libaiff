@@ -4,7 +4,6 @@
 
 AC_PREREQ(2.60)
 AC_INIT([libaiff], [4.99], [marcotrillo@gmail.com])
-AC_CONFIG_HEADERS([libaiff/config.h])
 AC_CONFIG_SRCDIR([./libaiff.c])
 
 AC_CANONICAL_HOST

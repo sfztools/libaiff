@@ -29,6 +29,16 @@
 
 /* === Endian-related stuff === */
 
+#if defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__)
+# if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+#  define WORDS_BIGENDIAN
+# endif
+#elif defined(_WIN32)
+// always little-endian
+#else
+# error Unknown endianness for this platform
+#endif
+
 #define ARRANGE_ENDIAN_16(dat) ( (((dat) & 0xff00 ) >> 8 ) | (((dat) & 0x00ff ) << 8 ) )
 #define ARRANGE_ENDIAN_32(dat) ( (((dat) & 0xff000000 ) >> 24 ) | (((dat) & 0x00ff0000 ) >> 8 ) | (((dat) & 0x0000ff00 ) << 8 ) | (((dat) & 0x000000ff ) << 24 ) )
 

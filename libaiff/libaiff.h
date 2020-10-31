@@ -32,7 +32,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <libaiff/config.h>
 #include <libaiff/endian.h>
 
 #define LIBAIFF_API_VERSION	499
@@ -126,14 +125,6 @@ int AIFF_EndWritingSamples(AIFF_Ref) ;
 int AIFF_StartWritingMarkers(AIFF_Ref) ;
 int AIFF_WriteMarker(AIFF_Ref,uint64_t,char*) ;
 int AIFF_EndWritingMarkers(AIFF_Ref) ;
-
-#ifndef LIBAIFF
-
-#ifdef WORDS_BIGENDIAN
-#undef WORDS_BIGENDIAN
-#endif
-
-#endif /* !LIBAIFF */
 
 
 #endif /* LIBAIFF_H_INCL */

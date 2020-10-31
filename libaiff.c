@@ -36,8 +36,8 @@ static struct codec* codecs[] = {
 	NULL
 };
 
-static AIFF_Ref AIFF_ReadOpen (const char *, int);
-static AIFF_Ref AIFF_WriteOpen (const char *, int);
+static AIFF_Ref AIFF_ReadOpen (FILE *, int);
+static AIFF_Ref AIFF_WriteOpen (FILE *, int);
 static void AIFF_ReadClose (AIFF_Ref);
 static int AIFF_WriteClose (AIFF_Ref);
 static int DoWriteSamples (AIFF_Ref, void *, size_t, int);
@@ -49,12 +49,20 @@ AIFF_Ref
 AIFF_OpenFile(const char *file, int flags)
 {
 	AIFF_Ref ref = NULL;
-	
+	FILE *fd = NULL;
+
 	if (flags & F_RDONLY) {
-		ref = AIFF_ReadOpen(file, flags);
+		fd = fopen(file, "rb");
+		if (fd)
+			ref = AIFF_ReadOpen(fd, flags);
 	} else if (flags & F_WRONLY) {
-		ref = AIFF_WriteOpen(file, flags);
+		fd = fopen(file, "wb");
+		if (fd)
+			ref = AIFF_WriteOpen(fd, flags);
 	}
+
+	if (fd && !ref)
+		fclose(fd);
 
 	return ref;
 }
@@ -79,7 +87,7 @@ AIFF_CloseFile(AIFF_Ref ref)
 }
 
 static AIFF_Ref 
-AIFF_ReadOpen(const char *file, int flags)
+AIFF_ReadOpen(FILE *fd, int flags)
 {
 	AIFF_Ref r;
 	IFFHeader hdr;
@@ -88,21 +96,15 @@ AIFF_ReadOpen(const char *file, int flags)
 	if (!r) {
 		return NULL;
 	}
-	r->fd = fopen(file, "rb");
-	if (r->fd == NULL) {
-		free(r);
-		return NULL;
-	}
+	r->fd = fd;
 	r->flags = F_RDONLY | flags;
-	if (fread(&hdr, 1, sizeof(hdr), r->fd) != sizeof(hdr)) {
-		fclose(r->fd);
+	if (fread(&hdr, 1, sizeof(hdr), fd) != sizeof(hdr)) {
 		free(r);
 		return NULL;
 	}
 	switch (hdr.hid) {
 	case AIFF_TYPE_IFF:
 		if (hdr.len == 0) {
-			fclose(r->fd);
 			free(r);
 			return NULL;
 		}
@@ -115,19 +117,16 @@ AIFF_ReadOpen(const char *file, int flags)
 		case AIFF_TYPE_AIFC:
 			break;
 		default:
-			fclose(r->fd);
 			free(r);
 			return NULL;
 		}
 
 		if (init_aifx(r) < 1) {
-			fclose(r->fd);
 			free(r);
 			return NULL;
 		}
 		break;
 	default:
-		fclose(r->fd);
 		free(r);
 		return NULL;
 	}
@@ -479,7 +478,7 @@ AIFF_ReadClose(AIFF_Ref r)
 }
 
 static AIFF_Ref 
-AIFF_WriteOpen(const char *file, int flags)
+AIFF_WriteOpen(FILE *fd, int flags)
 {
 	AIFF_Ref w;
 	IFFHeader hdr;
@@ -487,16 +486,10 @@ AIFF_WriteOpen(const char *file, int flags)
 	
 	w = malloc(kAIFFRecSize);
 	if (!w) {
-err0:
 		return NULL;
 	}
 
-	w->fd = fopen(file, "wb");
-	if (w->fd == NULL) {
-err1:
-		free(w);
-		goto err0;
-	}
+	w->fd = fd;
 	hdr.hid = ARRANGE_BE32(AIFF_FORM);
 	w->len = 4;
 	hdr.len = ARRANGE_BE32(4);
@@ -505,10 +498,9 @@ err1:
 	else
 		hdr.fid = ARRANGE_BE32(AIFF_AIFF);
 
-	if (fwrite(&hdr, 1, sizeof(hdr), w->fd) != sizeof(hdr)) {
-err2:
-		fclose(w->fd);
-		goto err1;
+	if (fwrite(&hdr, 1, sizeof(hdr), fd) != sizeof(hdr)) {
+		free(w);
+		return NULL;
 	}
 	w->stat = 0;
 	w->segmentSize = 0;
@@ -527,9 +519,10 @@ err2:
 		chk.len = ARRANGE_BE32(4);
 		vers = ARRANGE_BE32(AIFC_STD_DRAFT_082691);
 
-		if (fwrite(&chk, sizeof(chk), 1, w->fd) != 1 || 
-		    fwrite(&vers, sizeof(vers), 1, w->fd) != 1) {
-			goto err2;
+		if (fwrite(&chk, sizeof(chk), 1, fd) != 1 ||
+		    fwrite(&vers, sizeof(vers), 1, fd) != 1) {
+			free(w);
+			return NULL;
 		}
 
 		w->len += 12;

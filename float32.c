@@ -28,8 +28,8 @@
 
 #include "private.h"
 
-#ifdef HAVE_INTEL_80x87
-# define IEEE754_NATIVE	1
+#if !defined IEEE754_NATIVE
+# define IEEE754_NATIVE 1
 #endif
 
 /*
@@ -196,7 +196,7 @@ float32_seek(AIFF_Ref r, uint64_t pos)
 # define NAN_VALUE	HUGE_VAL
 #endif
 
-#ifndef IEEE754_NATIVE
+#if ! IEEE754_NATIVE
 
 /*
  * Write IEEE Single Precision Numbers.
@@ -336,7 +336,7 @@ float32_read_float32(AIFF_Ref r, float *buffer, int n)
 	if (bytesToRead == 0)
 		return 0;
 	
-#ifndef IEEE754_NATIVE
+#if ! IEEE754_NATIVE
 	/*
 	 * Check if this host supports 32-bit IEEE floats
 	 * natively and take note about it to avoid doing
@@ -360,7 +360,7 @@ float32_read_float32(AIFF_Ref r, float *buffer, int n)
 			nSamplesRead = 0;
 		}
 		
-#ifndef IEEE754_NATIVE
+#if ! IEEE754_NATIVE
 	} else {
 		void	*buf = AIFFBufAllocate(r, kAIFFBufConv, bytesToRead);
 

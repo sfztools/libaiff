@@ -35,9 +35,6 @@ AC_TYPE_INT64_T
 AC_TYPE_UINT64_T
 
 case $host in
- i?86-*-*)	OPTIM_FLAGS="-DHAVE_INTEL_80x87";
- 		OPTIM_FILES="extended_x87.o";
-		;;
  *)		OPTIM_FLAGS="";
 		OPTIM_FILES="";
 		;;

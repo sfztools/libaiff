@@ -36,10 +36,12 @@
 #include <libaiff/libaiff.h>
 #include "private.h"
 
-#ifdef HAVE_INTEL_80x87
+#if defined(__GNUC__) && __LDBL_MANT_DIG__ == 64 && \
+    __LDBL_MIN_EXP__ == -16381 && __LDBL_MAX_EXP__ == 16384
+#define HAVE_INTEL_80x87
+#endif
 
-double x87_read_extended(const unsigned char *);
-void x87_write_extended(double, unsigned char *);
+#ifdef HAVE_INTEL_80x87
 
 static void
 byteswap(const uint8_t *buffer, uint8_t *data)
@@ -62,19 +64,16 @@ byteswap(const uint8_t *buffer, uint8_t *data)
 double
 ieee754_read_extended(const uint8_t *buffer)
 {
-        uint8_t data[10];
-
-        byteswap(buffer, data);
-        return x87_read_extended(data);
+	long double x = 0;
+	byteswap(buffer, (uint8_t *)&x);
+	return (double)x;
 }
 
 void
 ieee754_write_extended(double d, uint8_t *out)
 {
-        uint8_t data[10];
-
-        x87_write_extended(d, data);
-        byteswap(data, out);
+	long double x = (long double)d;
+	byteswap((const uint8_t*)&x, out);
 }
 
 #else /* HAVE_INTEL_80x87 */

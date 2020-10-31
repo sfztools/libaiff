@@ -5284,9 +5284,6 @@ _ACEOF
 
 
 case $host in
- i?86-*-*)	OPTIM_FLAGS="-DHAVE_INTEL_80x87";
- 		OPTIM_FILES="extended_x87.o";
-		;;
  *)		OPTIM_FLAGS="";
 		OPTIM_FILES="";
 		;;

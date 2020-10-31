@@ -32,8 +32,6 @@
  * 	Motorola 68040 and Intel 80x87 FPUs.
  */
 
-#define LIBAIFF 1
-#include <libaiff/libaiff.h>
 #include "private.h"
 
 #if defined(__GNUC__) && __LDBL_MANT_DIG__ == 64 && \

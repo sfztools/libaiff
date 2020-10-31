@@ -26,14 +26,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#define LIBAIFF 1
-#include <libaiff/libaiff.h>
-#include <libaiff/endian.h>
 #include "private.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
 
 void
 lpcm_swap16(int16_t *dstSamples, const int16_t *srcSamples, int nSamples)

@@ -28,10 +28,6 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#define LIBAIFF 1
-#include <stdlib.h>
-#include <libaiff/libaiff.h>
-#include <math.h>
 #include "private.h"
 
 static  int8_t expt[128] = {0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4,

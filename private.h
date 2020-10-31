@@ -1,6 +1,12 @@
 /* $Id: private.h,v 1.29 2009/09/11 16:51:07 toad32767 Exp $ */
 
+#define LIBAIFF 1
+#include <libaiff/libaiff.h>
+#include <libaiff/endian.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 /* XXX */
 #define OFF_T off_t

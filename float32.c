@@ -26,12 +26,6 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#define LIBAIFF 1
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <libaiff/libaiff.h>
-#include <libaiff/endian.h>
 #include "private.h"
 
 #ifdef HAVE_INTEL_80x87

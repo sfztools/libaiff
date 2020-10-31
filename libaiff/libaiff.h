@@ -65,23 +65,6 @@ typedef struct s_AIFF_Rec* AIFF_Ref;
 #define AIFF_COPY		0x28632920
 #define AIFF_ANNO		0x414e4e4f
 
-#if !defined(LIBAIFF) && !defined(LIBAIFF_NOCOMPAT)
-/*
- * Backwards compatibility with LibAiff 1 and 2
- */
-#ifdef WORDS_BIGENDIAN
-static char NameID[4] = {'N', 'A', 'M', 'E'};
-static char AuthID[4] = {'A', 'U', 'T', 'H'};
-static char CopyID[4] = {'(', 'c', ')', ' '};
-static char AnnoID[4] = {'A', 'N', 'N', 'O'};
-#else
-static char NameID[4] = {'E', 'M', 'A', 'N'};
-static char AuthID[4] = {'H', 'T', 'U', 'A'};
-static char CopyID[4] = {' ', ')', 'c', '('};
-static char AnnoID[4] = {'O', 'N', 'N', 'A'};
-#endif /* WORDS_BIGENDIAN */
-#endif /* !LIBAIFF && !LIBAIFF_NOCOMPAT */
-
 /*
  * Flags.
  * Flags which start with the F_ prefix are
@@ -154,16 +137,6 @@ int AIFF_EndWritingSamples(AIFF_Ref) ;
 int AIFF_StartWritingMarkers(AIFF_Ref) ;
 int AIFF_WriteMarker(AIFF_Ref,uint64_t,char*) ;
 int AIFF_EndWritingMarkers(AIFF_Ref) ;
-
-#if !defined(LIBAIFF) && !defined(LIBAIFF_NOCOMPAT)
-#define AIFF_ReadRef		AIFF_Ref
-#define AIFF_WriteRef		AIFF_Ref
-#define AIFF_Open(f)		AIFF_OpenFile((f), F_RDONLY)
-#define AIFF_WriteOpen(f)	AIFF_OpenFile((f), F_WRONLY)
-#define AIFF_Close(f)		(void) AIFF_CloseFile(f)
-#define AIFF_WriteClose(f)	AIFF_CloseFile(f)
-#define AIFF_SetSoundFormat(r,a,s,b) AIFF_SetAudioFormat((r),(a),(double)(s),(b))
-#endif /* !LIBAIFF && !LIBAIFF_NOCOMPAT */
 
 #ifndef LIBAIFF
 

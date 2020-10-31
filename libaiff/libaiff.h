@@ -32,6 +32,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#if defined(_WIN32)
+#include <wchar.h>
+#endif
 #include <libaiff/endian.h>
 
 #define LIBAIFF_API_VERSION	499
@@ -103,6 +106,9 @@ typedef struct s_Instrument Instrument ;
 
 /* == Function prototypes == */
 AIFF_Ref AIFF_OpenFile(const char *, int) ;
+#if defined(_WIN32)
+AIFF_Ref AIFF_OpenFileW(const wchar_t *, int) ;
+#endif
 int AIFF_CloseFile(AIFF_Ref) ;
 char* AIFF_GetAttribute(AIFF_Ref,IFFType) ;
 int AIFF_GetInstrumentData(AIFF_Ref,Instrument*) ;

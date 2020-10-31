@@ -67,6 +67,30 @@ AIFF_OpenFile(const char *file, int flags)
 	return ref;
 }
 
+#if defined(_WIN32)
+AIFF_Ref
+AIFF_OpenFileW(const wchar_t *file, int flags)
+{
+	AIFF_Ref ref = NULL;
+	FILE *fd = NULL;
+
+	if (flags & F_RDONLY) {
+		fd = _wfopen(file, L"rb");
+		if (fd)
+			ref = AIFF_ReadOpen(fd, flags);
+	} else if (flags & F_WRONLY) {
+		fd = _wfopen(file, L"wb");
+		if (fd)
+			ref = AIFF_WriteOpen(fd, flags);
+	}
+
+	if (fd && !ref)
+		fclose(fd);
+
+	return ref;
+}
+#endif
+
 int
 AIFF_CloseFile(AIFF_Ref ref)
 {

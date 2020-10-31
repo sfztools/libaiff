@@ -1,5 +1,9 @@
 /* $Id: private.h,v 1.29 2009/09/11 16:51:07 toad32767 Exp $ */
 
+#pragma once
+#if !defined(LIBAIFF_PRIVATE_H_INCL)
+#define LIBAIFF_PRIVATE_H_INCL 1
+
 #define LIBAIFF 1
 #define _LARGEFILE_SOURCE 1
 #include <libaiff/libaiff.h>
@@ -17,6 +21,12 @@
 #define ftello _ftelli64
 #define fseeko _fseeki64
 typedef int64_t off_t;
+#endif
+
+#ifdef LIBAIFF_UNITY_BUILD
+# define LIBAIFF_INTERNAL static
+#else
+# define LIBAIFF_INTERNAL
 #endif
 
 struct codec {
@@ -175,52 +185,59 @@ typedef struct s_AIFFComment CommentChunk;
 
 
 /* iff.c */
-int 
+LIBAIFF_INTERNAL int 
 find_iff_chunk(IFFType, AIFF_Ref, uint32_t *);
-char           *
+LIBAIFF_INTERNAL char           *
 get_iff_attribute(AIFF_Ref r, IFFType attrib);
-int 
+LIBAIFF_INTERNAL int 
 set_iff_attribute(AIFF_Ref w, IFFType attrib, char *str);
-int 
+LIBAIFF_INTERNAL int 
 clone_iff_attributes(AIFF_Ref w, AIFF_Ref r);
 
 /* aifx.c */
-int 
+LIBAIFF_INTERNAL int 
 init_aifx(AIFF_Ref);
-int 
+LIBAIFF_INTERNAL int 
 read_aifx_marker(AIFF_Ref r, int *id, uint64_t * position, char **name);
-int 
+LIBAIFF_INTERNAL int 
 get_aifx_instrument(AIFF_Ref r, Instrument * inpi);
-int 
+LIBAIFF_INTERNAL int 
 do_aifx_prepare(AIFF_Ref r);
-const char           *
+LIBAIFF_INTERNAL const char           *
 get_aifx_enc_name(IFFType);
 
 /* lpcm.c */
-void            lpcm_swap16(int16_t *, const int16_t *, int);
-void            lpcm_swap32(int32_t *, const int32_t *, int);
-void            lpcm_swap_samples(int, int, const void *, void *, int);
-void            lpcm_dequant(int segmentSize, void *buffer, float *outFrames, int nFrames);
+LIBAIFF_INTERNAL void            lpcm_swap16(int16_t *, const int16_t *, int);
+LIBAIFF_INTERNAL void            lpcm_swap32(int32_t *, const int32_t *, int);
+LIBAIFF_INTERNAL void            lpcm_swap_samples(int, int, const void *, void *, int);
+LIBAIFF_INTERNAL void            lpcm_dequant(int segmentSize, void *buffer, float *outFrames, int nFrames);
+#ifndef LIBAIFF_UNITY_BUILD
 extern struct codec lpcm;
+#endif
 
 /* g711.c */
+#ifndef LIBAIFF_UNITY_BUILD
 extern struct codec ulaw;
 extern struct codec alaw;
+#endif
 
 /* float32.c */
+#ifndef LIBAIFF_UNITY_BUILD
 extern struct codec float32;
+#endif
 
 /* extended.c */
-void            ieee754_write_extended(double, uint8_t *);
-double          ieee754_read_extended(const uint8_t *);
+LIBAIFF_INTERNAL void            ieee754_write_extended(double, uint8_t *);
+LIBAIFF_INTERNAL double          ieee754_read_extended(const uint8_t *);
 
 /* pascal.c */
-int             PASCALInGetLength(FILE *);
-char           *PASCALInRead(FILE *, int *);
-int             PASCALOutGetLength(const char *);
-int             PASCALOutWrite(FILE *, const char *);
+LIBAIFF_INTERNAL int             PASCALInGetLength(FILE *);
+LIBAIFF_INTERNAL char           *PASCALInRead(FILE *, int *);
+LIBAIFF_INTERNAL int             PASCALOutGetLength(const char *);
+LIBAIFF_INTERNAL int             PASCALOutWrite(FILE *, const char *);
 
 /* libaiff.c */
-void		 AIFFBufDelete(AIFF_Ref, int);
-void		*AIFFBufAllocate(AIFF_Ref, int, unsigned int);
+LIBAIFF_INTERNAL void		 AIFFBufDelete(AIFF_Ref, int);
+LIBAIFF_INTERNAL void		*AIFFBufAllocate(AIFF_Ref, int, unsigned int);
 
+#endif // !defined(LIBAIFF_PRIVATE_H_INCL)

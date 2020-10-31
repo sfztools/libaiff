@@ -287,6 +287,7 @@ lpcm_write_lpcm(AIFF_Ref w, void *samples, size_t len, int readOnlyBuf)
 	return 1;
 }
 
+LIBAIFF_INTERNAL
 struct codec lpcm = {
 	AUDIO_FORMAT_LPCM,
 	NULL,

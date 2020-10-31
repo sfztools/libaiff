@@ -393,6 +393,7 @@ float32_read_float32(AIFF_Ref r, float *buffer, int n)
 }
 
 
+LIBAIFF_INTERNAL
 struct codec float32 = {
 	AUDIO_FORMAT_FL32,
 	NULL,

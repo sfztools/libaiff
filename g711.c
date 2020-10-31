@@ -288,6 +288,7 @@ g711_write_lpcm(AIFF_Ref w, void *inptr, size_t ilen, int readOnlyBuf)
         return (1);
 }
 
+LIBAIFF_INTERNAL
 struct codec  ulaw = {
 	AUDIO_FORMAT_ULAW,
 	g711_ulaw_create,
@@ -298,6 +299,7 @@ struct codec  ulaw = {
 	g711_delete
 };
 
+LIBAIFF_INTERNAL
 struct codec  alaw = {
 	AUDIO_FORMAT_ALAW,
 	g711_alaw_create,

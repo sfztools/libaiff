@@ -1,0 +1,6 @@
+*.o
+*.a
+Makefile
+config.log
+config.status
+config.h

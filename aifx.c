@@ -254,7 +254,7 @@ do_aifx_prepare(AIFF_Ref r)
 	uint32_t clen;
 	SoundChunk s;
 	long of;
-	ASSERT(sizeof(SoundChunk) == 8);
+	assert(sizeof(SoundChunk) == 8);
 
 	if (!find_iff_chunk(AIFF_SSND, r, &clen))
 		return (-1);

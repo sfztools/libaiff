@@ -40,7 +40,7 @@ find_iff_chunk(IFFType chunk, AIFF_Ref r, uint32_t * length)
 		IFFChunk chk;
 	} d;
 	
-	ASSERT(sizeof(IFFChunk) == 8);
+	assert(sizeof(IFFChunk) == 8);
 	chunk = ARRANGE_BE32(chunk);
 
 	/*
@@ -142,7 +142,7 @@ set_iff_attribute(AIFF_Ref w, IFFType attrib, char *str)
 	IFFChunk chk;
 	uint32_t len = strlen(str);
 	
-	ASSERT(sizeof(IFFChunk) == 8);
+	assert(sizeof(IFFChunk) == 8);
 	chk.id = ARRANGE_BE32(attrib);
 	chk.len = ARRANGE_BE32(len);
 

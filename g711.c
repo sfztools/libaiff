@@ -271,7 +271,7 @@ g711_write_lpcm(AIFF_Ref w, void *inptr, size_t ilen, int readOnlyBuf)
         case AUDIO_FORMAT_ULAW: f = ulawenc; break;
         case AUDIO_FORMAT_ALAW: f = alawenc; break;
         default:
-                ASSERT(0);
+                assert(0);
         }
         
         for (i = 0; i < n; i++) {

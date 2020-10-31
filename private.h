@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include <math.h>
 #if !defined(_WIN32)
 #include <sys/types.h>
@@ -69,14 +70,6 @@ struct s_AIFF_Rec {
 #undef MIN
 #endif
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
-
-#ifdef ASSERT
-#undef ASSERT
-#endif
-
-void            AIFFAssertionFailed(const char *, int);
-
-#define ASSERT(x) if(!(x)) AIFFAssertionFailed(__FILE__, __LINE__)
 
 /* private flags */
 #define F_IEEE754_CHECKED	(1 << 27)

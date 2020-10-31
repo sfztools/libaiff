@@ -483,7 +483,7 @@ AIFF_WriteOpen(const char *file, int flags)
 {
 	AIFF_Ref w;
 	IFFHeader hdr;
-	ASSERT(sizeof(IFFHeader) == 12);
+	assert(sizeof(IFFHeader) == 12);
 	
 	w = malloc(kAIFFRecSize);
 	if (!w) {
@@ -521,7 +521,7 @@ err2:
 	if (flags & F_AIFC) {
 		IFFChunk chk;
 		uint32_t vers;
-		ASSERT(sizeof(IFFChunk) == 8);
+		assert(sizeof(IFFChunk) == 8);
 
 		chk.id = ARRANGE_BE32(AIFF_FVER);
 		chk.len = ARRANGE_BE32(4);
@@ -625,8 +625,8 @@ AIFF_SetAudioFormat(AIFF_Ref w, int channels, double sRate, int bitsPerSample)
 	uint32_t ckLen = 18;
 	const char* encName = NULL;
 	uint8_t buffer[10];
-	ASSERT(sizeof(chk) == 8);
-	ASSERT(sizeof(enc) == 4);
+	assert(sizeof(chk) == 8);
+	assert(sizeof(enc) == 4);
 
 	if (!w || !(w->flags & F_WRONLY))
 		return -1;
@@ -718,8 +718,8 @@ AIFF_StartWritingSamples(AIFF_Ref w)
 {
 	IFFChunk chk;
 	SoundChunk s;
-	ASSERT(sizeof(chk) == 8);
-	ASSERT(sizeof(s) == 8);
+	assert(sizeof(chk) == 8);
+	assert(sizeof(s) == 8);
 
 	if (!w || !(w->flags & F_WRONLY))
 		return -1;
@@ -757,7 +757,7 @@ DoWriteSamples(AIFF_Ref w, void *samples, size_t len, int readOnlyBuf)
 	if (w->stat != 2)
 		return 0;
         
-        ASSERT(NULL != c);
+        assert(NULL != c);
 
         return ((*c->write_lpcm)(w, samples, len, readOnlyBuf));
 }
@@ -1059,11 +1059,11 @@ AIFFBufDelete (AIFF_Ref a, int nbuf)
 {
 	AIFF_Buf	*b;
 
-	ASSERT(0 <= nbuf && nbuf < kAIFFNBufs);
+	assert(0 <= nbuf && nbuf < kAIFFNBufs);
 
 	b = &a->buf[nbuf];
 	if (b->len > 0) {
-		ASSERT(NULL != b->ptr);
+		assert(NULL != b->ptr);
 		free(b->ptr);
 		b->len = 0;
 	}
@@ -1074,7 +1074,7 @@ AIFFBufAllocate (AIFF_Ref a, int nbuf, unsigned int len)
 {
 	AIFF_Buf	*b;
 
-	ASSERT(0 <= nbuf && nbuf < kAIFFNBufs);
+	assert(0 <= nbuf && nbuf < kAIFFNBufs);
 	
 	b = &a->buf[nbuf];
 	if (b->len < len) {
@@ -1089,24 +1089,3 @@ AIFFBufAllocate (AIFF_Ref a, int nbuf, unsigned int len)
 
 	return b->ptr;
 }
-
-/*
- * 	Assertion failed.
- */
-void
-AIFFAssertionFailed (const char * fil, int lin)
-{
-	
-	fprintf(stderr, "%s: assertion at %s:%d failed\n",
-			PACKAGE_STRING,
-			fil,
-			lin
-			);
-	fprintf(stderr, "%s: please report this bug at <%s>\n",
-			PACKAGE_STRING,
-			PACKAGE_BUGREPORT
-			);
-	
-	abort();
-}
-

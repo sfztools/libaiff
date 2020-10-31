@@ -13,7 +13,7 @@
 #include <sys/types.h>
 #endif
 
-#if defined(_WIN32)
+#if defined(_WIN32) && defined(_MSC_VER)
 #define ftello _ftelli64
 #define fseeko _fseeki64
 typedef int64_t off_t;

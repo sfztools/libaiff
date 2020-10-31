@@ -40,7 +40,6 @@
 
 #include <math.h>
 
-#if !defined(HAVE_OPTIMIZED_SWAP)
 void
 lpcm_swap16(int16_t *dstSamples, const int16_t *srcSamples, int nSamples)
 {
@@ -60,7 +59,6 @@ lpcm_swap32(int32_t *dstSamples, const int32_t *srcSamples, int nSamples)
 		dstSamples[i] = ARRANGE_ENDIAN_32(srcSamples[i]);
 	}
 }
-#endif /* !HAVE_OPTIMIZED_SWAP */
 
 
 

@@ -182,7 +182,7 @@ lpcm_dequant(int segmentSize, void *buffer, float *outSamples, int nSamples)
 			  
 			  while (nSamples-- > 0)
 				{
-#ifdef WORDS_BIGENDIAN
+#ifdef LIBAIFF_BIGENDIAN
 				u.b[0] = (f[0] & 0x80 ? 0xff : 0);
 				u.b[1] = f[0];
 				u.b[2] = f[1];
@@ -192,7 +192,7 @@ lpcm_dequant(int segmentSize, void *buffer, float *outSamples, int nSamples)
 				u.b[2] = f[2];
 				u.b[1] = f[1];
 				u.b[0] = f[0];				
-#endif /* WORDS_BIGENDIAN */
+#endif /* LIBAIFF_BIGENDIAN */
 
 				*t++ = ldexp(u.i, -23);
 				f += 3;

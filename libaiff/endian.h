@@ -31,7 +31,7 @@
 
 #if defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__)
 # if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-#  define WORDS_BIGENDIAN
+#  define LIBAIFF_BIGENDIAN
 # endif
 #elif defined(_WIN32)
 // always little-endian
@@ -42,7 +42,7 @@
 #define ARRANGE_ENDIAN_16(dat) ( (((dat) & 0xff00 ) >> 8 ) | (((dat) & 0x00ff ) << 8 ) )
 #define ARRANGE_ENDIAN_32(dat) ( (((dat) & 0xff000000 ) >> 24 ) | (((dat) & 0x00ff0000 ) >> 8 ) | (((dat) & 0x0000ff00 ) << 8 ) | (((dat) & 0x000000ff ) << 24 ) )
 
-#ifdef WORDS_BIGENDIAN
+#ifdef LIBAIFF_BIGENDIAN
 # define ARRANGE_BE16(dat) (dat)
 # define ARRANGE_BE32(dat) (dat)
 # define ARRANGE_LE16(dat) ARRANGE_ENDIAN_16(dat)
@@ -52,7 +52,7 @@
 # define ARRANGE_BE32(dat) ARRANGE_ENDIAN_32(dat)
 # define ARRANGE_LE16(dat) (dat)
 # define ARRANGE_LE32(dat) (dat)
-#endif /* WORDS_BIGENDIAN */
+#endif /* LIBAIFF_BIGENDIAN */
 
 
 

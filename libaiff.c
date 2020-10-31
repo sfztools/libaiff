@@ -369,7 +369,7 @@ AIFF_ReadSamples16Bit(AIFF_Ref r, int16_t * samples, unsigned int n)
 
 		i = n;
 		while (i > 0) {
-#ifdef WORDS_BIGENDIAN
+#ifdef LIBAIFF_BIGENDIAN
 			*wp++ = *rp++;
 			*wp++ = *rp++;
 			rp++;
@@ -424,7 +424,7 @@ AIFF_ReadSamples32Bit(AIFF_Ref r, int32_t * samples, unsigned int n)
 
 		i = n;
 		while (i > 0) {
-#ifdef WORDS_BIGENDIAN
+#ifdef LIBAIFF_BIGENDIAN
 			*wp++ = *rp++;
 			*wp++ = *rp++;
 			*wp++ = *rp++;
@@ -815,7 +815,7 @@ AIFF_WriteSamples32Bit(AIFF_Ref w, int32_t * samples, int n)
 		uint8_t *outbytes = (uint8_t *) buffer;
 		
 		for (i = 0, j = 0; i < n; ++i, j += 3) {
-#ifdef WORDS_BIGENDIAN
+#ifdef LIBAIFF_BIGENDIAN
 			outbytes[j + 0] = inbytes[(i << 2) + 0];
 			outbytes[j + 1] = inbytes[(i << 2) + 1];
 			outbytes[j + 2] = inbytes[(i << 2) + 2];

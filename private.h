@@ -1,16 +1,22 @@
 /* $Id: private.h,v 1.29 2009/09/11 16:51:07 toad32767 Exp $ */
 
 #define LIBAIFF 1
+#define _LARGEFILE_SOURCE 1
 #include <libaiff/libaiff.h>
 #include <libaiff/endian.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#if !defined(_WIN32)
+#include <sys/types.h>
+#endif
 
-/* XXX */
-#define OFF_T off_t
-#define FSEEKO fseeko
+#if defined(_WIN32)
+#define ftello _ftelli64
+#define fseeko _fseeki64
+typedef int64_t off_t;
+#endif
 
 struct codec {
 	IFFType         fmt;

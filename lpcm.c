@@ -167,7 +167,7 @@ lpcm_dequant(int segmentSize, void *buffer, float *outSamples, int nSamples)
 			  
 			  while (nSamples-- > 0)
 				{
-				  outSamples[nSamples] = ldexp(integers[nSamples], -31);
+				  outSamples[nSamples] = integers[nSamples] * (1.0 / (1 << 31));
 				}
 			  break;
 		  }
@@ -194,7 +194,7 @@ lpcm_dequant(int segmentSize, void *buffer, float *outSamples, int nSamples)
 				u.b[0] = f[0];				
 #endif /* LIBAIFF_BIGENDIAN */
 
-				*t++ = ldexp(u.i, -23);
+				*t++ = u.i * (1.0 / (1 << 23));
 				f += 3;
 				}
 			  break;
@@ -205,7 +205,7 @@ lpcm_dequant(int segmentSize, void *buffer, float *outSamples, int nSamples)
 			  
 			  while (nSamples-- > 0)
 				{
-				  outSamples[nSamples] = ldexp(integers[nSamples], -15);
+				  outSamples[nSamples] = integers[nSamples] * (1.0 / (1 << 15));
 				}
 			  break;
 		  }
@@ -215,7 +215,7 @@ lpcm_dequant(int segmentSize, void *buffer, float *outSamples, int nSamples)
 			  
 			  while (nSamples-- > 0)
 				{
-				  outSamples[nSamples] = ldexp(integers[nSamples], -7);
+				  outSamples[nSamples] = integers[nSamples] * (1.0 / (1 << 7));
 				}
 			  break;
 		  }

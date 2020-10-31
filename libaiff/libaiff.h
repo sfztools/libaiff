@@ -26,6 +26,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#pragma once
 #ifndef LIBAIFF_H_INCL
 #define LIBAIFF_H_INCL 1
 

@@ -160,14 +160,16 @@ lpcm_seek(AIFF_Ref r, uint64_t pos)
 void
 lpcm_dequant(int segmentSize, void *buffer, float *outSamples, int nSamples)
 {
+	int i;
+
 	switch (segmentSize) {
 		case 4:
 		  {
 			  int32_t *integers = (int32_t *) buffer;
-			  
-			  while (nSamples-- > 0)
+
+			  for (i = 0; i < nSamples; ++i)
 				{
-				  outSamples[nSamples] = integers[nSamples] * (1.0 / (1 << 31));
+				  outSamples[i] = integers[i] / 2147483648.0;
 				}
 			  break;
 		  }
@@ -179,8 +181,8 @@ lpcm_dequant(int segmentSize, void *buffer, float *outSamples, int nSamples)
 				int32_t i;
 				uint8_t b[4];
 			  } u;
-			  
-			  while (nSamples-- > 0)
+
+			  for (i = 0; i < nSamples; ++i)
 				{
 #ifdef LIBAIFF_BIGENDIAN
 				u.b[0] = (f[0] & 0x80 ? 0xff : 0);
@@ -202,20 +204,20 @@ lpcm_dequant(int segmentSize, void *buffer, float *outSamples, int nSamples)
 		case 2:
 		  {
 			  int16_t *integers = (int16_t *) buffer;
-			  
-			  while (nSamples-- > 0)
+
+			  for (i = 0; i < nSamples; ++i)
 				{
-				  outSamples[nSamples] = integers[nSamples] * (1.0 / (1 << 15));
-				}
+				  outSamples[i] = integers[i] * 0.000030517578125f;
+			  }
 			  break;
 		  }
 		case 1:
 		  {
 			  int8_t *integers = (int8_t *) buffer;
-			  
-			  while (nSamples-- > 0)
+
+			  for (i = 0; i < nSamples; ++i)
 				{
-				  outSamples[nSamples] = integers[nSamples] * (1.0 / (1 << 7));
+				  outSamples[i] = integers[i] * 0.0078125f;
 				}
 			  break;
 		  }

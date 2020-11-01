@@ -240,7 +240,7 @@ g711_read_float32(AIFF_Ref r, float *buffer, int nFrames)
 
 	bytes = buf;
 	for (i = 0; i < bytesRead; ++i) {
-		buffer[i] = ldexp(table[bytes[i]], -15);
+		buffer[i] = table[bytes[i]] * (1.0 / (1 << 15));
 	}
 
 	return bytesRead;       /* = framesRead */

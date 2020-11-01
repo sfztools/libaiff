@@ -29,7 +29,7 @@
 #include "private.h"
 
 void
-lpcm_swap16(int16_t *dstSamples, const int16_t *srcSamples, int nSamples)
+lpcm_swap16(int16_t *restrict dstSamples, const int16_t *restrict srcSamples, int nSamples)
 {
 	int i;
 
@@ -39,7 +39,7 @@ lpcm_swap16(int16_t *dstSamples, const int16_t *srcSamples, int nSamples)
 }
 
 void
-lpcm_swap32(int32_t *dstSamples, const int32_t *srcSamples, int nSamples)
+lpcm_swap32(int32_t *restrict dstSamples, const int32_t *restrict srcSamples, int nSamples)
 {
 	int i;
 

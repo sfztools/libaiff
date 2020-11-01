@@ -139,7 +139,7 @@ lpcm_read_lpcm(AIFF_Ref r, void *buffer, size_t len)
 static int 
 lpcm_seek(AIFF_Ref r, uint64_t pos)
 {
-        off_t           of;
+        OFF_T           of;
         uint64_t        b;
 
 	b = pos * r->nChannels * r->segmentSize;
@@ -147,7 +147,7 @@ lpcm_seek(AIFF_Ref r, uint64_t pos)
 		return 0;
                 
 	of = b;
-	if (fseeko(r->fd, of, SEEK_CUR) < 0) {
+	if (FSEEKO(r->fd, of, SEEK_CUR) < 0) {
 		return -1;
 	}
 	r->pos = b;

@@ -17,10 +17,14 @@
 #include <sys/types.h>
 #endif
 
-#if defined(_WIN32) && defined(_MSC_VER)
-#define ftello _ftelli64
-#define fseeko _fseeki64
-typedef int64_t off_t;
+#if defined(_WIN32)
+#define FTELLO _ftelli64
+#define FSEEKO _fseeki64
+#define OFF_T int64_t
+#else
+#define FTELLO ftello
+#define FSEEKO fseeko
+#define OFF_T off_t
 #endif
 
 #ifdef LIBAIFF_UNITY_BUILD

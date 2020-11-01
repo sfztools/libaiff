@@ -199,14 +199,14 @@ static int
 g711_seek(AIFF_Ref r, uint64_t pos)
 {
 	uint64_t        b;
-	off_t           of;
+	OFF_T           of;
 
 	b = pos * r->nChannels;
 	if (b >= r->soundLen)
 		return 0;
                 
 	of = b;
-	if (fseeko(r->fd, of, SEEK_CUR) < 0) {
+	if (FSEEKO(r->fd, of, SEEK_CUR) < 0) {
 		return -1;
 	}
         

@@ -21,10 +21,12 @@
 #define FTELLO _ftelli64
 #define FSEEKO _fseeki64
 #define OFF_T int64_t
+#define RESTRICT __restrict
 #else
 #define FTELLO ftello
 #define FSEEKO fseeko
 #define OFF_T off_t
+#define RESTRICT restrict
 #endif
 
 #ifdef LIBAIFF_UNITY_BUILD
